@@ -22,5 +22,21 @@ module.exports = {
                 res.status(200).json({message: "new user has been created"})
             }
         })
+    },
+    all: function(req,res,next){
+        User.find({},
+            function(err,data){
+                if(err) res.status(400).json({err: err.message})
+                else res.status(200).json({data: data})
+            })
+    },
+    follow: function(req,res,next){
+        //masih hardcode harus ganti
+        // User.update({
+        //     email: "kevin@mail.com"
+        // },{
+        //     $set:{following: req.body.newFollowedUser}
+        // })
+        console.log(req.body.newFollowedUser)
     }
 }

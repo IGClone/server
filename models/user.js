@@ -32,7 +32,8 @@ const userSchema = new Schema({
         type: String,
         required: [true, "Password is Required"]
     }, 
-    post: [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}]
+    post: [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}],
+    following: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}]
 })
 
 const User = mongoose.model("User", userSchema)
