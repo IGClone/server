@@ -5,7 +5,11 @@ const postSchema = mongoose.Schema({
         type : String
     }, 
     images : [],
-    owner : { type : mongoose.Schema.Types.ObjectId, ref : 'User'} 
+    owner : { type : mongoose.Schema.Types.ObjectId, ref : 'User'},
+    comment: [{
+        commenter: {type : mongoose.Schema.Types.ObjectId, ref : 'User'},
+        commentBody: String
+    }]
 }) 
 
 const Post = mongoose.model('Post', postSchema)

@@ -20,5 +20,16 @@ module.exports = {
             .catch( error => {
                 res.status(500).json({ message  : error.message})
             })
+    },
+    comment: function(req,res,next){
+        console.log(req.currentUser, req.currentId)
+        // Post.updateOne({
+        //     _id: req.params.commentId
+        // },{
+        //     $push:{
+        //         commentBody: req.body.comment,
+        //         commenter: req.currentUser.
+        //     }
+        // })
     }
 }

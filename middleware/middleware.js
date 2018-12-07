@@ -26,6 +26,7 @@ module.exports = {
         let decoded = decodeToken( token )
         if (decoded ){
             req.currentUser = decoded
+            console.log(req.currentUser)
             next()
         }else{
             res.status(400).json({ message : 'Token Tidak Valid!'})
