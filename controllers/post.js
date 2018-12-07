@@ -3,8 +3,10 @@ const User = require('../models/user')
 module.exports = {
     postSingle :  (req, res) => {
         let user = req.currentUser
-        console.log('ini merupakan user :',  user)
-        let data = { description, owner: user._id  } = req.body
+        console.log(' ini user : ', user)
+        let data = { description } = req.body
+        data.owner= user.id
+        data.labels = req.labels
         data.images =[ String(req. publicUrl) ]
         let newPost = new Post( data )
         newPost.save()
@@ -36,5 +38,16 @@ module.exports = {
         .catch((err) =>{
             res.status(400).json({err: err.message})
         })
+    },   
+    readFeed : (req, res) => {
+        Post
+        .find({})
+        .populate('owner')
+            .then( posts => {
+                res.status(200).json( posts )
+            })
+            .catch( error => {
+                res.status(500).json({ message : error.message})
+            })
     }
 }
