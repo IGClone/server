@@ -6,6 +6,6 @@ const middleware = require("../middleware/middleware")
 router.get("/", userController.all)
 router.post("/login", middleware.checkPassword, userController.login)
 router.post("/signup", userController.signup)
-router.put("/follow", userController.follow)
+router.put("/follow", middleware.isLogin, userController.follow)
 
 module.exports = router;

@@ -24,19 +24,29 @@ module.exports = {
         })
     },
     all: function(req,res,next){
-        User.find({},
-            function(err,data){
-                if(err) res.status(400).json({err: err.message})
-                else res.status(200).json({data: data})
-            })
+        User.find({},{
+            password: 0
+        })
+        .then((data) =>{
+            res.status(200).json({data: data})
+        })
+        .catch((err) =>{
+            res.status(400).json({err: err.message})
+        })
     },
     follow: function(req,res,next){
-        //masih hardcode harus ganti
-        // User.update({
-        //     email: "kevin@mail.com"
-        // },{
-        //     $set:{following: req.body.newFollowedUser}
-        // })
-        console.log(req.body.newFollowedUser)
+        
+        User.updateOne({
+            email: req.currentUser
+        },{
+            $push:{following: req.body.newFollowingUser}
+        })
+        .then((user_docs) =>{
+            console.log(user_docs)
+            res.status(200).json({message: `you sucessfully follow this user`})
+        })
+        .catch((err) =>{
+            res.status(400).json({err: err.message})
+        })
     }
 }
