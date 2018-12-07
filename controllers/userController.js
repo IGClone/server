@@ -4,8 +4,8 @@ const jwttoken = require("../helpers/jwtoken")
 
 module.exports = {
     login: function(req, res) {
-         let user = req.currentUser
-         let token = jwttoken.createToken()
+         let user = req.currentUser[0]
+         let token = jwttoken.createToken(user.email, user._id)
          res.status(200).json({
             token:token
         })

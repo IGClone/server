@@ -1,5 +1,6 @@
 const User = require("../models/user")
 const bcrypt = require("../helpers/bcrypt")
+const { decodeToken } = require('../helpers/jwtoken')
 
 module.exports = {
     checkPassword: function(req, res, next) {
@@ -19,6 +20,16 @@ module.exports = {
                     }
                 }
         })
+    },
+    isLogin : (req, res, next) => {
+        let token = req.headers.token
+        let decoded = decodeToken( token )
+        if (decoded ){
+            req.currentUser = decoded
+            next()
+        }else{
+            res.status(400).json({ message : 'Token Tidak Valid!'})
+        }
     }
     
 }
