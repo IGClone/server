@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken")
 
 module.exports = {
-    createToken: function(email) {
+    createToken: function(email, id) {
+        console.log( email)
         return jwt.sign({
             email: email,
+            id : id
         }, process.env.JWTTOKEN)
     },
     decodeToken: function(token) {
