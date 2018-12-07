@@ -24,25 +24,32 @@ module.exports = {
             })
     },
     comment: function(req,res,next){
-        Post.updateOne({
-            _id: req.params.commentId
-        },{
-            $push:{
-                commentBody: req.body.comment,
-                commenter: req.currentUser.id
-            }
-        })
-        .then((comment_doc) =>{
-            res.status(200).json({message: `you just added comment`})
-        })
-        .catch((err) =>{
-            res.status(400).json({err: err.message})
-        })
+        console.log('id comment :', req.params.postId)
+        console.log('body : ', req.body )
+        console.log('user : ', req.currentUser)
+        Post.findById( req.params.postId)
+            .then( post => {
+                post.comment.push({
+                    commentBody: req.body.comment,
+                    commenter: req.currentUser.id
+                })
+                return post.save()
+            })
+            .then( response => {
+                console.log( response )
+                res.status(201).json({ message : 'success add comment'})
+            })
+            .catch((err) =>{
+                res.status(400).json({err: err.message})
+            })
+      
+       
     },   
     readFeed : (req, res) => {
         Post
         .find({})
         .populate('owner')
+        .populate('comment.commenter')
             .then( posts => {
                 res.status(200).json( posts )
             })

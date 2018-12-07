@@ -12,7 +12,7 @@ const postController = require("../controllers/post")
 const GoogleVision = require('../controllers/vision')
 
 /* GET users listing. */
-router.post('/comment/:postId',isLogin, postController.comment);
+router.put('/comment/:postId',isLogin, postController.comment);
 
 /* GET users listing. */
 router.post('/',isLogin, upload.single('images'),uploadSingle,GoogleVision.detectTags,postSingle);
