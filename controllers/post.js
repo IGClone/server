@@ -22,14 +22,19 @@ module.exports = {
             })
     },
     comment: function(req,res,next){
-        console.log(req.currentUser, req.currentId)
-        // Post.updateOne({
-        //     _id: req.params.commentId
-        // },{
-        //     $push:{
-        //         commentBody: req.body.comment,
-        //         commenter: req.currentUser.
-        //     }
-        // })
+        Post.updateOne({
+            _id: req.params.commentId
+        },{
+            $push:{
+                commentBody: req.body.comment,
+                commenter: req.currentUser.id
+            }
+        })
+        .then((comment_doc) =>{
+            res.status(200).json({message: `you just added comment`})
+        })
+        .catch((err) =>{
+            res.status(400).json({err: err.message})
+        })
     }
 }

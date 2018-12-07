@@ -36,18 +36,18 @@ module.exports = {
     },
     follow: function(req,res,next){
         console.log( req.currentUser)
-        //console.log(req.body.newFollowingUser)
-        // User.updateOne({
-        //     email: req.currentUser.email
-        // },{
-        //     $push:{following: req.body.newFollowingUser}
-        // })
-        // .then((user_docs) =>{
-        //     console.log(user_docs)
-        //     res.status(200).json({message: `you sucessfully follow this user`})
-        // })
-        // .catch((err) =>{
-        //     res.status(400).json({err: err.message})
-        // })
+        console.log(req.body.newFollowingUser)
+        User.updateOne({
+            email: req.currentUser.email
+        },{
+            $push:{following: req.body.newFollowingUser}
+        })
+        .then((user_docs) =>{
+            console.log(user_docs)
+            res.status(200).json({message: `you sucessfully follow this user`})
+        })
+        .catch((err) =>{
+            res.status(400).json({err: err.message})
+        })
     }
 }
