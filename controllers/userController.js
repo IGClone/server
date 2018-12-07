@@ -22,5 +22,32 @@ module.exports = {
                 res.status(200).json({message: "new user has been created"})
             }
         })
+    },
+    all: function(req,res,next){
+        User.find({},{
+            password: 0
+        })
+        .then((data) =>{
+            res.status(200).json({data: data})
+        })
+        .catch((err) =>{
+            res.status(400).json({err: err.message})
+        })
+    },
+    follow: function(req,res,next){
+        console.log( req.currentUser)
+        console.log(req.body.newFollowingUser)
+        User.updateOne({
+            email: req.currentUser.email
+        },{
+            $push:{following: req.body.newFollowingUser}
+        })
+        .then((user_docs) =>{
+            console.log(user_docs)
+            res.status(200).json({message: `you sucessfully follow this user`})
+        })
+        .catch((err) =>{
+            res.status(400).json({err: err.message})
+        })
     }
 }
